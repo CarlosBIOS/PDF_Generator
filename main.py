@@ -22,13 +22,11 @@ pdf = FPDF(orientation='P', unit='mm', format='A4')
 
 data = pandas.read_csv('topics.csv')
 
-for index, value in data.iterrows():
-    add = 0
-    while add != value['Pages']:
-        pdf.add_page()
+for _, value in data.iterrows():
+    pdf.add_page()
 
-        pdf.set_font(family='Times', style='B', size=24)
-        pdf.set_text_color(0, 0, 0)
+    pdf.set_font(family='Times', style='B', size=24)
+    pdf.set_text_color(0, 0, 0)
 # w (float): Largura da célula em milímetros. Se w for 0, a célula se estende até a margem direita da página.
 # h (float): Altura da célula em milímetros. No exemplo, h=12 define a altura da célula como 12 milímetros.
 # txt (str): Texto a ser impresso dentro da célula. No exemplo, txt='Hello There!' define o texto que será exibido
@@ -37,10 +35,11 @@ for index, value in data.iterrows():
 # ln (int): Indica a quebra de linha após a célula.Pode ser:0(sem quebra de linha), 1(quebra de linha para a próxima
 # célula na linha seguinte) e 2 (quebra de linha e inicia uma nova página)
 # border (int or str): Define a borda da célula. Pode ser: 0(sem borda) e 1(borda completa)
-        pdf.cell(w=0, h=12, txt=value['Topic'], align='L', ln=1, border=0)
-        pdf.line(10, 20, 200, 20)
-        # pdf.set_font(family='Times', size=10)
-        # pdf.cell(w=0, h=12, txt='Hi There!', align='L', ln=1, border=1)
-        add += 1
+    pdf.cell(w=0, h=12, txt=value['Topic'], align='L', ln=1, border=0)
+    pdf.line(10, 20, 200, 20)
+    # pdf.set_font(family='Times', size=10)
+    # pdf.cell(w=0, h=12, txt='Hi There!', align='L', ln=1, border=1)
+    for _ in range(value['Pages'] - 1):
+        pdf.add_page()
 
 pdf.output('output.pdf')
