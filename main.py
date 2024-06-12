@@ -19,6 +19,7 @@ from fpdf import FPDF
 import pandas
 
 pdf = FPDF(orientation='P', unit='mm', format='A4')
+pdf.set_auto_page_break(auto=False, margin=0)  # Para acrescentar o texto no canto inferior direito
 
 data = pandas.read_csv('topics.csv')
 
@@ -39,7 +40,17 @@ for _, value in data.iterrows():
     pdf.line(10, 20, 200, 20)
     # pdf.set_font(family='Times', size=10)
     # pdf.cell(w=0, h=12, txt='Hi There!', align='L', ln=1, border=1)
+
+    pdf.ln(265)  # acrescanta 278 mm de break lines!!!
+    pdf.set_font(family='Times', style='I', size=8)
+    pdf.set_text_color(180, 180, 180)
+    pdf.cell(w=0, h=10, txt=value['Topic'], align='R')
+
     for _ in range(value['Pages'] - 1):
         pdf.add_page()
+        pdf.ln(276)  # acrescanta 278 mm de break lines!!!
+        pdf.set_font(family='Times', style='I', size=8)
+        pdf.set_text_color(180, 180, 180)
+        pdf.cell(w=0, h=10, txt=value['Topic'], align='R')
 
 pdf.output('output.pdf')
