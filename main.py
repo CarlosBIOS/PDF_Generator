@@ -37,20 +37,26 @@ for _, value in data.iterrows():
 # célula na linha seguinte) e 2 (quebra de linha e inicia uma nova página)
 # border (int or str): Define a borda da célula. Pode ser: 0(sem borda) e 1(borda completa)
     pdf.cell(w=0, h=12, txt=value['Topic'], align='L', ln=1, border=0)
-    pdf.line(10, 20, 200, 20)
+
+    for y in range(20, 281, 10):
+        pdf.line(10, y, 200, y)
+
     # pdf.set_font(family='Times', size=10)
     # pdf.cell(w=0, h=12, txt='Hi There!', align='L', ln=1, border=1)
 
     pdf.ln(265)  # acrescanta 278 mm de break lines!!!
     pdf.set_font(family='Times', style='I', size=8)
     pdf.set_text_color(180, 180, 180)
-    pdf.cell(w=0, h=10, txt=value['Topic'], align='R')
+    pdf.multi_cell(w=0, h=10, txt=f"{pdf.page_no()} - {value['Topic']}", align='R')
 
     for _ in range(value['Pages'] - 1):
         pdf.add_page()
         pdf.ln(276)  # acrescanta 278 mm de break lines!!!
         pdf.set_font(family='Times', style='I', size=8)
         pdf.set_text_color(180, 180, 180)
-        pdf.cell(w=0, h=10, txt=value['Topic'], align='R')
+        pdf.multi_cell(w=0, h=10, txt=f"{pdf.page_no()} - {value['Topic']}", align='R')
+
+        for y in range(20, 281, 10):
+            pdf.line(10, y, 200, y)
 
 pdf.output('output.pdf')
