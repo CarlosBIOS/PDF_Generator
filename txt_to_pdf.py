@@ -8,7 +8,7 @@ for filepath in filepaths:
     pdf.add_page()
     pdf.set_font(family='Times', style='B', size=24)
     title = filepath.replace('TextFiles\\', '').replace('.txt', '').title()
-    pdf.cell(w=50, h=10, txt=f'{title}', align='L', border=0)
+    pdf.cell(w=50, h=10, txt=f'{title}', align='L', border=0, ln=1)
     pdf.ln()
     pdf.set_font(family='Times', size=12)
     with open(filepath, encoding='utf-8') as file:
